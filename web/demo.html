@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="zh-hant-TW">
+<head>
+<title>ToneOZ Web Dictionary 澳聲通Web中文字典</title>
+<meta charset="utf-8">
+<script src="jquery.min.js"></script>
+<script src="tzdic/tzdicidx.js" charset="utf-8"></script>
+<script src="tzdicui.js" charset="utf-8"></script>
+</head>
+<style>
+	.tzTextarea{
+		width: min(100%, 800px);
+		display:inline-block;
+		position:relative;
+	}
+	.tzIFrame{
+		width: min(100%, 800px);
+		height: 400px;
+		background-color:#000;
+	}
+</style>
+<script>
+	$(document).ready(function () {
+		let tzDicUI = new TZDicUI();
+		tzDicUI.init();
+	});
+</script>
+<body>
+ToneOZ Web Dictionary 澳聲通Web中文字典<br>
+by <a href="https://toneoz.com">ToneOZ 澳聲通 Graphical Pinyin Editor 拼音注音編輯器</a>
+<br><br>
+Please input characters, move your cursor to query characters. <br>請輸入文字, 移動輸入游標可查詢單字<br><br>
+Select multiple characters by your mouse to query a phrase. <br>輸入後用滑鼠選取文字可查詢多字詞<br>
+<textarea class='tzTextarea' rows=8>宣聲the voice和樂of joy宣聲和樂</textarea>
+
+<br><br>
+
+Dictionary query results<br>
+字典查詢結果:<br>
+<iframe class='tzIFrame'></iframe>
+
+
+</body>
+
+</html>
