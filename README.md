@@ -27,7 +27,7 @@ Source : 教育部國語辭典公眾授權網
 https://language.moe.gov.tw/001/Upload/Files/site_content/M0001/respub/index.html"
 			
 # Library dependencies
-jQuery
+- jquery.min.js : jQuery
 			
 # Files description	
 - ToneOZDic.gs : Google app script for Google spreadsheet
