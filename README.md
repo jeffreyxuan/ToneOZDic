@@ -1,6 +1,10 @@
+
 # ToneOZDic 澳聲通Web字典UI
-Web Dictionary with only Frontend Javascript requied, free for commercial use. <br>
+Web Dictionary with only Frontend Javascript is requied, free for commercial use. <br>
 一個Javascript的網頁字典, 完全前端架構, 無需後端, 免費商用.
+
+![demoui](https://user-images.githubusercontent.com/14179988/119607032-00278200-be37-11eb-8474-f838e2c60280.JPG)
+
 
 # By <a href="https://toneoz.com">ToneOZ.COM 拼音注音編輯器 澳聲通</a>
 This project includes a Javascript Dictionary UI and a Google Script Dictionary Creator.<br>
