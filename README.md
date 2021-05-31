@@ -32,7 +32,8 @@ https://language.moe.gov.tw/001/Upload/Files/site_content/M0001/respub/index.htm
 - TZDicCreator_example.xlsx : example input for ToneOZDic.gs<br>
 字典檔範例,格式與「國語辭典簡編本」相同
 
-- tzdic.html : HTML UI for single dictionary query<br>
+- tzdic.html : 
+- - tzdicentry.js : HTML UI for single dictionary query<br>
 HTML介面, 負責單一查詢
 
 - demo.html : HTML UI for end user to access the dictionary<br>
@@ -79,11 +80,23 @@ Copy the ToneOZDic.gs into the Google Spreadsheet Script by <br>
 			
 # Step 5.
 Review and modify the CONFIG in begin of ToneOZDic.gs . Please refer the the comments inline<br>
-依需要調整ToneOZDic.gs開頭的參數,請參照註解中的說明	
+依需要調整ToneOZDic.gs開頭的參數,請參照註解中的說明. e.g.: 建議調整前四個參數:
+
+	// begin CONFIG 參數 /////////////////////////
+	// How many lines are there in the original dictionary file?
+	// e.g.: 國語辭典簡編本 has 44712 lines in 2021-05-26
+	const INPUT_ROW_COUNT = 44712;
+	// specify the column order mapping to the 3 fields in ToneOZDic
+	// In ToneOZDic we have 3 fields : WORD, DESC1, DESC2
+	// e.g.: 國語辭典簡編本 has 4 columns : 0字詞名,1注音一式,2釋義,3多音參見訊息
+	const INPUT_COLUMN_WORD = 0; // the column 0字詞名 maps to field WORD
+	const INPUT_COLUMN_DESC1 = 1; // the column 1注音一式 maps to field DESC1
+	const INPUT_COLUMN_DESC2 = 2; // the column 2釋義 maps to field DESC2
+	
 			
 # Step 6.
-Create a folder "tzdic". Make sure the folder name is unique in your Google Drive.<br>
-請在您的Google Drive中開一個新資料夾,取名為"tzdic". 請確保您的Google Drive中沒有其他同名的資料夾.	
+Create a folder "tzdata". Make sure the folder name is unique in your Google Drive.<br>
+請在您的Google Drive中開一個新資料夾,取名為"tzdata". 請確保您的Google Drive中沒有其他同名的資料夾.	
 			
 # Step 7.
 Run the function "Step1()" in ToneOZDic.gs . Grant all permissions if the Google Script permission dialog popup<br>
@@ -98,12 +111,12 @@ Right click on the folder "tzdic" to select download<br>
 在資料夾"tzdic"上面敲右鍵選擇下載	
 			
 # Step 10.
-Unzip the folder "tzdic" to the same folder with the file tzdic.html<br>
-將下載後的zip解壓縮, 把資料夾"tzdic"放到與tzdic.html同一個資料夾	
+Unzip the folder "tzdata" to the same folder with the file tzdic.html<br>
+將下載後的zip解壓縮, 把資料夾"tzdata"放到與tzdic.html同一個資料夾	
 			
 # Step 11.
-Use any browser to open the tzdic.html to use the dictionary<br>
-使用瀏覽器開啟tzdic.html來使用字典
+Use any browser to open the demo.html to use the dictionary<br>
+使用瀏覽器開啟demo.html來使用字典
 
 # Designed by <a href="https://toneoz.com">ToneOZ.COM 拼音注音編輯器 澳聲通</a>
 
