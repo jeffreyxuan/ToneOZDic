@@ -1,14 +1,8 @@
 # ToneOZDic 動態載入的前端中英字典
-Frontend Chinese and English Dictionary framework. Support dynamic loading by splitting a big dictionary file into hundreds of small chunks, offline download mode available. free for commercial use. <br>
-完全前端架構的中英辭典框架, 提供切割工具將一個巨大的字典檔案分切成數百個小檔案, 付動態載入函式庫及範例, 可離線使用. 免費商用.
+Frontend Chinese and English Dictionary framework. Support dynamic loading by splitting a big dictionary file into hundreds of small chunks, offline download mode available. free for commercial use. This project includes a Javascript Dictionary UI and a Google Script Dictionary Creator.<br>
+完全前端架構的中英辭典框架, 提供切割工具將一個巨大的字典檔案分切成數百個小檔案, 付動態載入函式庫及範例, 可離線使用. 免費商用. 本專案包含Javascript字典介面及Google Script字典檔生成器.
 
 ![demoui](https://user-images.githubusercontent.com/14179988/119607032-00278200-be37-11eb-8474-f838e2c60280.JPG)
-
-
-# By <a href="https://toneoz.com">ToneOZ.COM 拼音注音編輯器 澳聲通</a>
-This project includes a Javascript Dictionary UI and a Google Script Dictionary Creator.<br>
-本Project包含Javascript字典介面及Google Script字典檔生成器
-
 
 # Hightlight features 特色
 - Pure frontend processing. No backend required.<br>
@@ -110,3 +104,7 @@ Unzip the folder "tzdic" to the same folder with the file tzdic.html<br>
 # Step 11.
 Use any browser to open the tzdic.html to use the dictionary<br>
 使用瀏覽器開啟tzdic.html來使用字典
+
+# Designed by <a href="https://toneoz.com">ToneOZ.COM 拼音注音編輯器 澳聲通</a>
+
+
