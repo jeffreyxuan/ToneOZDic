@@ -1,7 +1,6 @@
-
-# ToneOZDic 澳聲通Web字典UI
-Web Dictionary with only Frontend Javascript is requied, free for commercial use. <br>
-一個Javascript的網頁字典, 完全前端架構, 無需後端, 免費商用.
+# ToneOZDic 動態載入的前端中英字典
+Frontend Chinese and English Dictionary framework. Support dynamic loading by splitting a big dictionary file into hundreds of small chunks, offline download mode available. free for commercial use. <br>
+完全前端架構的中英辭典框架, 提供切割工具將一個巨大的字典檔案分切成數百個小檔案, 付動態載入函式庫及範例, 可離線使用. 免費商用.
 
 ![demoui](https://user-images.githubusercontent.com/14179988/119607032-00278200-be37-11eb-8474-f838e2c60280.JPG)
 
