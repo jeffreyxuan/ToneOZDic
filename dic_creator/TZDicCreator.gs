@@ -17,7 +17,7 @@ const OUTPUT_MAX_CHAR_PER_FILE = 25;
 const OUTPUT_PREFER_LINE_COUNT_PER_FILE = 200; 
 
 // final out folders for all ToneOZDic files. Make sure the folder name is unique in your Google Drive
-const OUTPUT_FOLDERNAME = "tzdic";
+const OUTPUT_FOLDERNAME = "tzdata";
 
 const SKIP_TITLE_ROW_COUNT = 1;
 const INPUT_SHEETNAME = "input";
@@ -36,6 +36,22 @@ function Step1(){
   function chkChinese(str){
     const REGEX_CHINESE = /[\u4e00-\u9fff]|[\u3400-\u4dbf]|[\u{20000}-\u{2a6df}]|[\u{2a700}-\u{2b73f}]|[\u{2b740}-\u{2b81f}]|[\u{2b820}-\u{2ceaf}]|[\uf900-\ufaff]|[\u3300-\u33ff]|[\ufe30-\ufe4f]|[\uf900-\ufaff]|[\u{2f800}-\u{2fa1f}]/u;
     return REGEX_CHINESE.test(str);
+  }
+  
+  /**
+	* Dictionary Index Hash function. 
+	* Must be sync between the Step1()->dftDicHash() in Google Script "TZDicCreator.cs"
+    * and the TZDicUI()->dftDicHash() in tzdicui.js 
+	*/
+  function dftDicHash(param){
+    let {phrase, ischinese = false} = param;
+    let hash = phrase;
+    if(!ischinese && phrase.length > 1){
+      hash = phrase[0]+phrase[1];
+    } else if (phrase.length >= 1){
+      hash = phrase[0];
+    }
+    return hash;
   }
   
   function doParseEdudic(inputsheetname, rowcount, outputsheetname, charPerFile, maxRowPerFile){
@@ -61,11 +77,10 @@ function Step1(){
       // build a hash to locate file of the phrase
       let phraseHash;
       let isChinese = chkChinese(phrase[0]);
-      if(isChinese || phrase.length<=1){
-        phraseHash = phrase[0];
-      } else {
-        phraseHash = phrase[0] + phrase[1];
-      }
+      phraseHash = dftDicHash({
+        phrase : phrase
+        , ischinese : isChinese
+      });
        
       let desc1 = InputValues[rowindex][INPUT_COLUMN_DESC1]; // zhuyin with (一)(二)....
       let desc2 = InputValues[rowindex][INPUT_COLUMN_DESC2];
@@ -186,6 +201,7 @@ function Step2(){
     
     let filecount = 0;
     let fileContent = "";
+    let filename = "";
     for(let rowindex in InputValues){
       let fileOrder = InputValues[rowindex][0];
       if(fileOrder == "" || fileOrder === undefined){
@@ -194,17 +210,17 @@ function Step2(){
       let rowChar = InputValues[rowindex][1];
       
       if(fileOrder != filecount){      
-        let filename;
+        
         if(filecount!=0){
           // do output
           fileContent += "}";
           fileContent = fileContent.replace(",}","}");
-          filename = ("00" + filecount).slice(-3);
+          filename = ""+filecount;
           let file = dir.createFile(filename + ".js", fileContent);
           fileContent = "";
         }
         filecount ++;
-        filename = ("00" + filecount).slice(-3);
+        filename = ""+filecount;
         fileContent = "window.tzdic[\"" + filename +"\"] = {";
       }
       charIndexDic[rowChar] = filecount;
@@ -215,14 +231,13 @@ function Step2(){
     // output last file    
     fileContent += "};";
     fileContent = fileContent.replace(",};","};");
-    let filename = ("00" + filecount).slice(-3);
+    filename = ""+filecount;
     let file = dir.createFile(filename+ ".js", fileContent);
     fileContent = "";
     
     // write index file
     let charIndexDicJson = JSON.stringify(charIndexDic);
     filename = "tzdicidx.js";
-    fileContent = "window.tzdic = {}; ";
     fileContent += "window.tzdicidx = " + charIndexDicJson + ";";
     file = dir.createFile(filename, fileContent);
   }  
