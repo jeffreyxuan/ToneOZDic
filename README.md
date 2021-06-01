@@ -1,4 +1,4 @@
-# ToneOZ Dic 動態載入的前端中英字典
+# ToneOZ Dictionary 動態載入的前端中英字典
 ToneOZDic is a Chinese and English Dictionary frontend framework. 
 Support dynamic loading by splitting a big dictionary file into hundreds of small chunks. 
 Offline download mode is available. 
