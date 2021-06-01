@@ -2,7 +2,7 @@
 // the dic URL 
 const tzDicFolder = "tzdic/";
 const tzDicEntryHTML = tzDicFolder+"tzdic.html";
-const tzIframeCss = {
+const tzstrCssIframe = {
 	width:"100%"
 	, height:"100%"
 };
@@ -16,40 +16,87 @@ if(!window.tzdicidx){
 }
 
 function TZDicUI(){	
+	// ToneOZDic Parameters
 	let tzparam = {
-		inputObj : null
-		, outputObj : null
-		, iframeObj : null
-		, fnGetPhrases : null
-		, fnGetHash : null
-		, tzVer : ""
+		objInput : null 		
+		// Input source of the jQuery Dom to get the dictionary query string		
+		, objIframe : null		
+		// Output display to a jQuery Dom for the dictionary query results		
+		, objOutput : null 		
+		// Output parent container of objIframe		
+		, fnGetPhrases : null	
+		// Custome function to get query strings from objInput
+		, fnGetHash : null		
+		// Custom Dictionary Index Hash function to overwrite the defautl function fnDftDicHash()
+		, pathCssDic : null		
+		// Custom css file path for the objIframe inner content
+		, pathJsIVSLookup : null
+		// Custeom lookup table to specify the IVS fonts (Ideographic Variation Sequences) displayed in the dictionary entry iframe
+		, strCssIframe : tzstrCssIframe
+		// Custom css object to decorate the objIframe outter position
+		, strVer : ""
+		// Version control string
 	};
+	
+	/**
+	* Init ToneOZDic
+	* @param {any} initparam : parameters to overwrite the default tzparam
+	* @return {array} words: output words array	
+	*/
 	this.init = function(initparam){
-		// read parameters
+		// parameters init
 		if(initparam){
-			Object.assign(tzparam, initparam);
-			if(tzparam.outputObj && !tzparam.iframeObj){
-				tzparam.iframeObj = $("<iframe>")
-					.addClass("tzIFrame")
-					.appendTo(tzparam.outputObj);
-			}
+			Object.assign(tzparam, initparam);			
 		}
-		if(tzIframeCss){
-			tzparam.iframeObj.css(tzIframeCss);
+		if(!tzparam.objInput){
+			tzparam.objInput = $("body");
+		}
+		if(!tzparam.objIframe){
+			tzparam.objIframe = $("<iframe>")
+				.addClass("tzIFrame");
+		}
+		if(!tzparam.objOutput){
+			tzparam.objOutput = $(".tzIFrameBox");
+			if(tzparam.objOutput.length == 0){
+				tzparam.objOutput = $("<div>")
+					.addClass("tzIFrameBox")
+					.appendTo("body");
+			}
+		} 
+		tzparam.objIframe.detach().appendTo(tzparam.objOutput);		
+		if(tzparam.strCssIframe){
+			tzparam.objIframe.css(tzparam.strCssIframe);
 		}
 		if(!tzparam.fnGetHash){
-			tzparam.fnGetHash = dftDicHash;
+			tzparam.fnGetHash = fnDftDicHash;
 		}
 		
 		// events init
-		tzparam.inputObj.on('input selectionchange propertychange keydown click focus', function(event) {
+		tzparam.objInput.on('input selectionchange propertychange keydown click focus', function(event) {
 			tzUpdateEvent({event:event});
-		});	
-		
+		});			
 		$(document).on('mouseup', function(event) {
 			tzUpdateEvent({event:event});
 		});	
+		
+		return tzparam;
 	};	
+	
+	/**
+	* Dictionary Index Hash function. 
+	* Must be sync between the Step1()->fnDftDicHash() in Google Script "TZDicCreator.cs"
+    * and the TZDicUI()->fnDftDicHash() in tzdicui.js 
+	*/
+	function fnDftDicHash(param){
+		let {phrase, ischinese = false} = param;
+		let hash = phrase;
+		if(!ischinese && phrase.length > 1){
+			hash = phrase[0]+phrase[1];
+		} else if (phrase.length >= 1){
+			hash = phrase[0];
+		}
+		return hash;
+	}
 	
 	window.tzUpdateEvent = function(dicParam){		
 		if(tzparam.fnGetPhrases){
@@ -75,23 +122,32 @@ function TZDicUI(){
 		let {event, phrases, rawstr} = dicparam;
 		tmrUpdateDic = setTimeout(function(){
 			let qArray = [];
-			let tmpq, id, hash, isChinese;
+			let tmpq, id, hash, isChinese, objSrc;
 
 			if(!phrases && !rawstr){
+				if(event && event.target){
+					objSrc = $(event.target);
+				} else {
+					objSrc = tzparam.objInput;
+				}
 				// get selected string from a textarea
-				rawstr = GetSelectedString(tzparam.inputObj);				
+				rawstr = GetSelectedString(objSrc);
 			}
 			if(rawstr){
+				rawstr = rawstr.trim();
 				// query each words in the selected string
 				let rawstrarr = splitx(rawstr);
 				if(!phrases){
 					phrases = [];
 				}
 				phrases = phrases.concat(rawstrarr);
+				
 				// add selected string as the first query phrase
-				qArray.push(GetQuery({
-					phrase : rawstr
-				}));				
+				if(phrases.indexOf(rawstr)<0){
+					qArray.push(GetQuery({
+						phrase : rawstr
+					}));				
+				}
 			}
 			
 			// get query parameters for ToneOZDic
@@ -106,12 +162,15 @@ function TZDicUI(){
 			
 			// do dictionary query
 			let dicURLBase = tzDicEntryHTML + "?" 
-				+ (tzparam.tzVer ? "v="+tzparam.tzVer+"&" : "");
+				+ (tzparam.strVer ? "v="+tzparam.strVer+"&" : "");
 			let URL = dicURLBase+"q="+dicURLParam;			
-			if(tzparam.cssDicPath){
-				URL += "&css=" + encodeURIComponent(tzparam.cssDicPath);
+			if(tzparam.pathCssDic){
+				URL += "&css=" + encodeURIComponent(tzparam.pathCssDic+".css");
 			}
-			tzparam.iframeObj.attr("src", URL).show();
+			if(tzparam.pathJsIVSLookup){
+				URL += "&ivs=" + encodeURIComponent(tzparam.pathJsIVSLookup+".js");
+			}
+			tzparam.objIframe.attr("src", URL).show();
 			tmrUpdateDic = null;
 			console.log(URL);
 		},200);
@@ -140,17 +199,28 @@ function TZDicUI(){
 		return tmpq;
 	}
 	
-	function GetSelectedString(inputObj){
-		let posStart = inputObj.prop("selectionStart");
-		let posEnd = inputObj.prop("selectionEnd");
-		let clength = posEnd-posStart;
-		if(clength<1){
-			clength = 1;
+	function GetSelectedString(objInput){
+		let s = null;
+		let posStart = objInput.prop("selectionStart");
+		let posEnd = objInput.prop("selectionEnd");
+		if(posStart !== undefined && posEnd != undefined){
+			// textarea
+			let clength = posEnd-posStart;
+			if(clength<1){
+				clength = 1;
+			}
+			if(posStart == posEnd && posStart!=0){
+				posStart--;
+			}			
+			s = objInput.val().substr(posStart, clength);
+		} else {
+			// dom HTML
+			if (window.getSelection) {
+				s = window.getSelection().toString();
+			} else if (document.selection && document.selection.type != "Control") {
+				s = document.selection.createRange().text;
+			}
 		}
-		if(posStart == posEnd && posStart!=0){
-			posStart--;
-		}			
-		let s = inputObj.val().substr(posStart, clength);
 		return s;
 	}
 	
@@ -192,22 +262,6 @@ function TZDicUI(){
 	function chkChinese(str){
 		const REGEX_CHINESE = /[\u4e00-\u9fff]|[\u3400-\u4dbf]|[\u{20000}-\u{2a6df}]|[\u{2a700}-\u{2b73f}]|[\u{2b740}-\u{2b81f}]|[\u{2b820}-\u{2ceaf}]|[\uf900-\ufaff]|[\u3300-\u33ff]|[\ufe30-\ufe4f]|[\uf900-\ufaff]|[\u{2f800}-\u{2fa1f}]/u;
 		return REGEX_CHINESE.test(str);
-	}
-	
-	/**
-	* Dictionary Index Hash function. 
-	* Must be sync between the Step1()->dftDicHash() in Google Script "TZDicCreator.cs"
-    * and the TZDicUI()->dftDicHash() in tzdicui.js 
-	*/
-	function dftDicHash(param){
-		let {phrase, ischinese = false} = param;
-		let hash = phrase;
-		if(!ischinese && phrase.length > 1){
-			hash = phrase[0]+phrase[1];
-		} else if (phrase.length >= 1){
-			hash = phrase[0];
-		}
-		return hash;
 	}
 }
 

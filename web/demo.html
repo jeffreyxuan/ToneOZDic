@@ -11,32 +11,94 @@
 		position:relative;
 	}
 	.tzResult{
-		width: min(100%, 800px);
+		width:100%;
+		height:100%;
+		background-color:#000;		
+	}
+	.tzResultBox{
+		width: min(50%, 800px);
 		height: 400px;
-		background-color:#000;
+		position:absolute;
+		right:10px;
+		top:10px;
+	}
+	.left{
+		width:50%;
+	}
+	.title{
+		font-size:2em;
+		font-weight:bold;
+	}
+	.subtitle{
+		font-size:1.5em;
+		font-weight:bold;
 	}
 </style>
 <script>
 	$(document).ready(function () {
+		// Init ToneOZDic
 		let tzDicUI = new TZDicUI();
-		tzDicUI.init({
-			inputObj : $(".tzTextarea")
-			, outputObj : $(".tzResult")
+		let tzDicObjs = tzDicUI.init({
+			//objInput : $(".tzTextarea")
+			//, objOutput : $(".tzResult")
+		});
+		
+		// Set results display position
+		tzDicObjs.objOutput.css({
+			position:"fixed"
+			, top: "10px"
+			, right: "10px"
+			, width: "45%"
+			, height: "90%"
+			, "background-color" :"#000"
 		});
 	});
 </script>
 </head>
 
 <body>
-ToneOZ Web Dictionary 澳聲通Web中文字典<br>
-by <a href="https://toneoz.com">ToneOZ 澳聲通 Graphical Pinyin Editor 拼音注音編輯器</a>
-<br><br>
-Please input characters, move your cursor to query characters. <br>請輸入文字, 移動輸入游標可查詢單字<br><br>
-Select multiple characters by your mouse to query a phrase. <br>輸入後用滑鼠選取文字可查詢多字詞<br>
-<textarea class='tzTextarea' rows=8>宣聲the voice和樂of joy宣聲和樂學校</textarea>
-<br><br>
-Dictionary query results<br>
-字典查詢結果:<br>
-<div class="tzResult"></div>
+<div class="left">
+	<span class='title'>Demo : ToneOZDic 澳聲通字典</span><span class='subtitle'>前端動態載入式工具</span><br>
+	By <a href="https://toneoz.com">Graphical Pinyin Editor ToneOZ 拼音注音編輯器 澳聲通 </a>
+	
+	<p>
+	ToneOZDic is a Chinese and English Dictionary frontend framework. 
+	Support dynamic loading by splitting a big dictionary file into hundreds of small chunks. 
+	Offline download mode is available. 
+	Free for commercial use. 
+	This project includes a Javascript Dictionary UI and a Google Script Dictionary Creator.<p>
+	澳聲通字典 是一個可動態載入的完全前端架構中英字典框架, 
+	提供切割工具將一個巨大的字典檔案分切成數百個小檔案, 能使用最少頻寬提供動態載入, 也可離線使用. 
+	免費商用(MIT開源授權). 
+	本專案包含Javascript字典介面及Google Script字典檔生成器.
+	
+	<h1>How to use</h1>
+	
+	<span class='subtitle'>Create your dictionary files
+	如何製作字典檔</span><p>
+	
+	The default demo dictionary file contains only the blue text below. Please refer to the <a target="_blank" href="https://github.com/jeffreyxuan/ToneOZDic">Usage</a> to get a complete dictionay file.<br>
+	本專案隨付的示範字典檔僅包含以下藍色字串. 請參考 <a target="_blank" href="https://github.com/jeffreyxuan/ToneOZDic">字典檔製作說明</a> 來獲取完整字典.
+	<p>
+	<span class='subtitle'>Query any selected text
+	查詢任何滑鼠選取的文字</span><p>
+	
+	Use your mouse to select a string from the blue text below. 
+	The dictionary query result will be displayed at the right.<p>
+	請試試看在下方藍色文字中用滑鼠選取任意字串, 字典查詢結果會顯示在右方.<p>
+	<span class='subtitle' style="color:#00f;">宣聲the voice和樂of joy宣聲和樂</span>
+	<p>
+	<span class='subtitle'>Query the character at the input cursor
+	查詢輸入游標處的文字</span><p>
+	
+	In an editable input, click or select anything to query the character or the string from the cursor<p>
+	點選可輸入的區域時, 會自動查詢游標所在的文字, 也支援選取查詢<br>
+	<textarea class='tzTextarea' rows=8>宣聲the voice和樂of joy宣聲和樂</textarea>
+	<!-- div class="tzResultBox">
+		Dictionary query results<br>
+		字典查詢結果:<br>
+		<div class="tzResult"></div>
+	</div -->
+</div>
 </body>
 </html>
