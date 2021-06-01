@@ -1,4 +1,4 @@
-# ToneOZDic 動態載入的前端中英字典
+# ToneOZ Dic 動態載入的前端中英字典
 ToneOZDic is a Chinese and English Dictionary frontend framework. 
 Support dynamic loading by splitting a big dictionary file into hundreds of small chunks. 
 Offline download mode is available. 
@@ -8,10 +8,12 @@ This project includes a Javascript Dictionary UI and a Google Script Dictionary 
 提供切割工具將一個巨大的字典檔案分切成數百個小檔案, 能使用最少頻寬提供動態載入, 也可離線使用. 
 免費商用(MIT開源授權). 
 本專案包含Javascript字典介面及Google Script字典檔生成器.
+
+## Designed by <a href="https://toneoz.com">Graphical Pinyin Editor ToneOZ 拼音注音編輯器 澳聲通</a>
 	
 ![toneozdic_20210601-1](https://user-images.githubusercontent.com/14179988/120260354-14f19300-c2d9-11eb-8906-4e511b62aff6.jpg)
 
-# Hightlight features 特色
+## Hightlight features 特色
 - Pure frontend processing. No backend required.<p>
 無需後端資料庫, 完全前端Javascript處理
 
@@ -24,10 +26,10 @@ This project includes a Javascript Dictionary UI and a Google Script Dictionary 
 - Open Source and Free for commercial use. MIT License.<p>
 開源免費商用, (MIT授權條款)
 			
-# Library dependencies
+## Library dependencies
 - jquery.min.js : jQuery
 			
-# Files description	
+## Files description	
 - dic_creator/ToneOZDic.gs : Google app script for Google spreadsheet
 
 - dic_creator/TZDicCreator_example.xlsx : example input for ToneOZDic.gs<p>
@@ -46,7 +48,7 @@ HTML介面, 一般使用者開啟此檔來使用字典
 - tzdic/tzlib/tzdicentry.js : HTML UI for single dictionary query<p>
 HTML介面, 負責單一查詢
 
-# How to install 如何安裝
+## How to install 如何安裝
 Include the Main ToneOZDic Javascript in your page<br>
 
 	<script src="tzdic/tzdicui.js" charset="utf-8" /></script>
@@ -69,7 +71,7 @@ Init the ToneOZDic on document ready
 		});
 	});
 
-# Usage Quick Guide 快速使用說明
+## Usage Quick Guide 快速使用說明
 - Query any selected text 查詢任何滑鼠選取的文字
 	
 - Use your mouse to select any string on your webpage. 
@@ -82,21 +84,21 @@ The dictionary query result will be displayed at the right.<p>
 - The default demo dictionary file contains only few words. Please refer to the Google Script Dictionary Creator Usage to get a complete dictionay file.<p>
 本專案隨付的示範字典檔僅包含"宣聲和樂"四個字. 請參考以下的 字典檔製作說明 來獲取完整字典.
 
-# Google Script Dictionary Creator 字典檔生成器	
+## Google Script Dictionary Creator 字典檔生成器	
 Convert the original dictionary file (Excel format) provided by the Ministry of Education (教育部) to ToneOZDic files (Javascript JSON format)<p>
 將「教育部國語辭典公眾授權網」提供的字典檔(Excel表格格式), 轉換為ToneOZDic的字典檔(碎片化Javascript JSON格式)<br>
 Source : 教育部國語辭典公眾授權網
 https://language.moe.gov.tw/001/Upload/Files/site_content/M0001/respub/index.html
 
 			
-# Usage : Dictionary File Creator TZDicCreator.gs
-# Step 1.
+# Usage : Dictionary File Creator TZDicCreator.gs 字典檔生成器使用說明
+## Step 1.
 Download the original dictionary file from  the Ministry of Education website (https://language.moe.gov.tw/001/Upload/Files/site_content/M0001/respub/index.html). We recommand to use the 「國語辭典簡編本」. click the 「資料下載」 to download<p>
 到「教育部國語辭典公眾授權網」下載Excel字典檔. 我們建議使用「國語辭典簡編本」, 點選「資料下載」
 教育部國語辭典公眾授權網
 https://language.moe.gov.tw/001/Upload/Files/site_content/M0001/respub/index.html
 		
-# Step 2.
+## Step 2.
 Make sure there are at least 3 columns in the original dictionary file, and their contents are:<br>
 請確認字典檔中至少有三個列, 這三個列的內容分別為:<br>
 - Word字詞
@@ -114,13 +116,13 @@ Use the excel to sort all rows by the column "Word字詞"<p>
 P.S.: All data must be sorted.<p>
 未排序的資料會造成查詢錯誤.
 		
-# Step 3.
+## Step 3.
 Import the original dictionary file into Google Spreadsheet, rename the sheet to "input"<p>
 將原始Excel字典檔匯入 Google Spreadsheet, 將資料表sheet 名稱改為 "input"
 
 ![toneozdic_20210601-3](https://user-images.githubusercontent.com/14179988/120261057-79f9b880-c2da-11eb-92bc-630ad1aaaaf9.jpg)
 		
-# Step 4.
+## Step 4.
 Copy and pasted the dic_creator/TZDicCreator.gs into the Google Spreadsheet Script by <p>
 將本專案中的 dic_creator/TZDicCreator.gs 拷貝貼上到 Script Editor
 	
@@ -137,7 +139,7 @@ Copy and pasted the dic_creator/TZDicCreator.gs into the Google Spreadsheet Scri
 	
 ![toneozdic_20210601-5](https://user-images.githubusercontent.com/14179988/120261469-51be8980-c2db-11eb-88af-d565319215a4.jpg)
 	
-# Step 5.
+## Step 5.
 Review and modify the CONFIG in begin of ToneOZDic.gs . Please refer the the comments inline<p>
 依需要調整ToneOZDic.gs開頭的參數,請參照註解中的說明. e.g.: 建議調整前四個參數:
 
@@ -153,13 +155,13 @@ Review and modify the CONFIG in begin of ToneOZDic.gs . Please refer the the com
 	const INPUT_COLUMN_DESC2 = 2; // the column 2釋義 maps to field DESC2
 	
 			
-# Step 6.
+## Step 6.
 Create a folder "tzdata". Make sure the folder name is unique in your Google Drive.<p>
 請在您的Google Drive中開一個新資料夾,取名為"tzdata". 請確保您的Google Drive中沒有其他同名的資料夾.	
 
 ![toneozdic_20210601-6](https://user-images.githubusercontent.com/14179988/120261686-c09be280-c2db-11eb-9284-c7acb71f6710.jpg)
 
-# Step 7.
+## Step 7.
 Run the function "Step1()" in ToneOZDic.gs . 
 執行ToneOZDic.gs中的函式 Step1() . 
 
@@ -172,26 +174,25 @@ In the first run, please grant all permissions if the Google Script permission d
 ![toneozdic_20210601-12](https://user-images.githubusercontent.com/14179988/120263205-8f70e180-c2de-11eb-8f5d-106ee7eec7fe.jpg)
 ![toneozdic_20210601-13](https://user-images.githubusercontent.com/14179988/120263211-913aa500-c2de-11eb-8710-7530e46331d9.jpg)
 			
-# Step 8.
+## Step 8.
 Run the function "Step2()" in ToneOZDic.gs <p>
 執行ToneOZDic.gs中的函式 Step2() . 	
 			
-# Step 9.
+## Step 9.
 Right click on the folder "tzdata" to select download<p>
 在資料夾"tzdata"上面敲右鍵選擇下載	
 
 ![toneozdic_20210601-8](https://user-images.githubusercontent.com/14179988/120262257-cd6d0600-c2dc-11eb-8508-8afb6c1220f7.jpg)
 			
-# Step 10.
+## Step 10.
 Unzip the folder "tzdata" to the same folder (tzdic/) with the file tzdic/tzdic.html<p>
 將下載後的zip解壓縮, 把資料夾"tzdata"放到與tzdic/tzdic.html同一個資料夾 (tzdic/)
 
 ![toneozdic_20210601-9](https://user-images.githubusercontent.com/14179988/120262381-f7262d00-c2dc-11eb-8788-4164dabedb32.jpg)
 	
-# Step 11.
+## Step 11.
 Use any browser to open the demo.html to use the dictionary<p>
 使用瀏覽器開啟demo.html來使用字典
 
-# Designed by <a href="https://toneoz.com">Graphical Pinyin Editor ToneOZ 拼音注音編輯器 澳聲通</a>
 
 
