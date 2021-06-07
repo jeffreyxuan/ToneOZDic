@@ -5,9 +5,9 @@ Offline download mode is available.
 Free for commercial use. 
 This project includes a Javascript Dictionary UI and a Google Script Dictionary Creator.<p>
 澳聲通字典 是一個可動態載入的完全前端架構中英字典框架, 
-提供切割工具將一個巨大的字典檔案分切成數百個小檔案, 能使用最少頻寬提供動態載入, 也可離線使用. 
-免費商用(MIT開源授權). 
-本專案包含Javascript字典介面及Google Script字典檔生成器.
+提供切割工具將一個巨大的字典檔案分切成數百個小檔案, 能使用最少頻寬提供動態載入, 也可離線使用。 
+免費商用(MIT開源授權)。
+本專案包含Javascript字典介面及Google Script字典檔生成器。
 
 ## Designed by <a href="https://toneoz.com">Graphical Pinyin Editor ToneOZ 拼音注音編輯器 澳聲通</a>
 	
@@ -21,7 +21,10 @@ This project includes a Javascript Dictionary UI and a Google Script Dictionary 
 傳輸量小, 使用時不用一次下載全部字典資料. ToneOZDic將一個巨大字典切割成數百個小檔案, 每個檔案僅數十KB, 線上使用時每次查詢時只會下載必要的檔案
 
 - Support offline mode. Users can download all files to their PC and use any browser to open the ToneOZDic. Developers can also embed the ToneOZDic into any Apps <p>
-可離線使用. 可將所有檔案全部下載後, 用任何瀏覽器開啟本機html使用, 也可內嵌到App應用.
+可離線使用。可將所有檔案全部下載後，用任何瀏覽器開啟本機html使用, 也可內嵌到App應用。
+	
+- Support multiple phrases and words in a single query.
+可在單次查詢中包含多個詞與字。例如：在一個查詢頁面中同時列出三個詞的解釋：「和平」，「和」，及「平」。
 
 - Open Source and Free for commercial use. MIT License.<p>
 開源免費商用, (MIT授權條款)
@@ -76,13 +79,13 @@ Init the ToneOZDic on document ready
 	
 - Use your mouse to select any string on your webpage. 
 The dictionary query result will be displayed at the right.<p>
-用滑鼠選取網頁上的任意字串, 字典查詢結果會顯示在右方.<p>
+用滑鼠選取網頁上的任意字串, 字典查詢結果會顯示在右方。<p>
 
 - In an editable input, click or select anything to query the character or the string from the cursor<p>
-點選可輸入的區域時, 會自動查詢游標所在的文字, 也支援選取查詢<br>
+點選可輸入的區域時, 會自動查詢游標所在的文字, 也支援選取查詢。<br>
 
 - The default demo dictionary file contains only few words. Please refer to the Google Script Dictionary Creator Usage to get a complete dictionay file.<p>
-本專案隨付的示範字典檔僅包含"宣聲和樂"四個字. 請參考以下的 字典檔製作說明 來獲取完整字典.
+本專案隨付的示範字典檔僅包含"宣聲和樂"四個字. 請參考以下的 字典檔製作說明 來獲取完整字典。
 
 ## Google Script Dictionary Creator 字典檔生成器	
 Convert the original dictionary file (Excel format) provided by the Ministry of Education (教育部) to ToneOZDic files (Javascript JSON format)<p>
@@ -152,14 +155,7 @@ Review and modify the CONFIG in begin of ToneOZDic.gs . Please refer the the com
 	// split each dic file size to be around 32KB = 32 x 1024 = 32768
 	const OUTPUT_PREFER_FILE_LENGTH = 32768;
 	
-			
 ## Step 6.
-Create a folder "tzdata". Make sure the folder name is unique in your Google Drive.<p>
-請在您的Google Drive中開一個新資料夾,取名為"tzdata". 請確保您的Google Drive中沒有其他同名的資料夾.	
-
-![toneozdic_20210601-6](https://user-images.githubusercontent.com/14179988/120261686-c09be280-c2db-11eb-9284-c7acb71f6710.jpg)
-
-## Step 7.
 In the Google Spreadsheet, create a blank sheet, rename it to "output". Then run the function "Step1()" in ToneOZDic.gs . 
 在Google Spreadsheet中開一個新的資料表sheet 名稱改為 "output". 
 執行ToneOZDic.gs中的函式 Step1(). 
@@ -172,7 +168,14 @@ In the first run, please grant all permissions if the Google Script permission d
 ![toneozdic_20210601-11](https://user-images.githubusercontent.com/14179988/120263202-8d0e8780-c2de-11eb-8e4a-21a98bcdb4a3.jpg)
 ![toneozdic_20210601-12](https://user-images.githubusercontent.com/14179988/120263205-8f70e180-c2de-11eb-8f5d-106ee7eec7fe.jpg)
 ![toneozdic_20210601-13](https://user-images.githubusercontent.com/14179988/120263211-913aa500-c2de-11eb-8710-7530e46331d9.jpg)
+	
 			
+## Step 7.
+Create a folder "tzdata". Make sure the folder name is unique in your Google Drive. Please delete this "tzdata" folder and create a new one each time before you run the function "Step2()" in the next step.<p>
+請在您的Google Drive中開一個新資料夾,取名為"tzdata". 請確保您的Google Drive中沒有其他同名的資料夾. 建議 : 每次執行以下提到的函式 Step2() 之前, 手動將舊的tzdata資料夾刪除後再重新開一個空的tzdata資料夾。
+
+![toneozdic_20210601-6](https://user-images.githubusercontent.com/14179988/120261686-c09be280-c2db-11eb-9284-c7acb71f6710.jpg)
+
 ## Step 8.
 Run the function "Step2()" in ToneOZDic.gs <p>
 執行ToneOZDic.gs中的函式 Step2() . 	
