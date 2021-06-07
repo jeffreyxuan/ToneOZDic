@@ -110,11 +110,6 @@ Example:<p>
 	
 	和服	ㄏㄜˊ　ㄈㄨˊ	"日本的傳統服裝。長衣、前襟交疊，腰部綁以寬帶。 &9b51._104_0.gif;現在的日本人只有在較正式的傳統禮儀場合才穿著和服了。　◎"<p>
 	和樂	ㄏㄜˊ　ㄌㄜˋ	"安和快樂。&9b51._104_0.gif;本公司員工彼此和樂相處，情如一家人。"<p>
-
-Use the excel to sort all rows by the column "Word字詞"<p>
-請利用Excel的排序功能, 以"Word字詞"這個列為基準, 對所有資料排序.<p>
-P.S.: All data must be sorted.<p>
-未排序的資料會造成查詢錯誤.
 		
 ## Step 3.
 Import the original dictionary file into Google Spreadsheet, rename the sheet to "input"<p>
@@ -141,18 +136,21 @@ Copy and pasted the dic_creator/TZDicCreator.gs into the Google Spreadsheet Scri
 	
 ## Step 5.
 Review and modify the CONFIG in begin of ToneOZDic.gs . Please refer the the comments inline<p>
-依需要調整ToneOZDic.gs開頭的參數,請參照註解中的說明. e.g.: 建議調整前四個參數:
+依需要調整ToneOZDic.gs開頭的參數,請參照註解中的說明. e.g.: 建議調整這些參數:
 
 	// begin CONFIG 參數 /////////////////////////
-	// How many lines are there in the original dictionary file?
-	// e.g.: 國語辭典簡編本 has 44712 lines in 2021-05-26
-	const INPUT_ROW_COUNT = 44712;
+	const strVer = "20210607"; // Version Control
 	// specify the column order mapping to the 3 fields in ToneOZDic
 	// In ToneOZDic we have 3 fields : WORD, DESC1, DESC2
 	// e.g.: 國語辭典簡編本 has 4 columns : 0字詞名,1注音一式,2釋義,3多音參見訊息
-	const INPUT_COLUMN_WORD = 0; // the column 0字詞名 maps to field WORD
-	const INPUT_COLUMN_DESC1 = 1; // the column 1注音一式 maps to field DESC1
-	const INPUT_COLUMN_DESC2 = 2; // the column 2釋義 maps to field DESC2
+	// source : https://language.moe.gov.tw/001/Upload/Files/site_content/M0001/respub/index.html
+	const MOE_COLUMN_WORD = 0;        // the column 0字詞名 maps to field WORD
+	const MOE_COLUMN_DESC1 = 1;       // the column 1注音一式 maps to field DESC1
+	const MOE_COLUMN_DESC2 = 2;       // the column 2釋義 maps to field DESC2
+	const MOE_COLUMN_DESC3 = 3;       // the column 3多音參見訊息 maps to field DESC3 (not in used)
+
+	// split each dic file size to be around 32KB = 32 x 1024 = 32768
+	const OUTPUT_PREFER_FILE_LENGTH = 32768;
 	
 			
 ## Step 6.
@@ -162,8 +160,9 @@ Create a folder "tzdata". Make sure the folder name is unique in your Google Dri
 ![toneozdic_20210601-6](https://user-images.githubusercontent.com/14179988/120261686-c09be280-c2db-11eb-9284-c7acb71f6710.jpg)
 
 ## Step 7.
-Run the function "Step1()" in ToneOZDic.gs . 
-執行ToneOZDic.gs中的函式 Step1() . 
+In the Google Spreadsheet, create a blank sheet, rename it to "output". Then run the function "Step1()" in ToneOZDic.gs . 
+在Google Spreadsheet中開一個新的資料表sheet 名稱改為 "output". 
+執行ToneOZDic.gs中的函式 Step1(). 
 
 ![toneozdic_20210601-7](https://user-images.githubusercontent.com/14179988/120261895-33a55900-c2dc-11eb-96b8-4f84e31d780d.jpg)
 
