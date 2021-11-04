@@ -9,6 +9,20 @@ This project includes a Javascript Dictionary UI and a Google Script Dictionary 
 免費商用(MIT開源授權)。
 本專案包含Javascript字典介面及Google Script字典檔生成器。
 
+## Demo
+
+* https://buttaiwan.github.io/bpmfvs/
+	
+	Mandarin Chinese Dictionary with Zhuyin IVS Fonts 
+	
+	國語注音字典 整合 字嗨IVS注音字型輸入工具
+	
+* https://buttaiwan.github.io/taigivs/
+	
+	Taiwanese Hokkien Dictionary with Taiwan Minnanyu Luomazi Pinyin IVS Fonts
+	
+	台羅字典 整合  字咍台語IVS字型輸入工具
+	
 ## Designed by <a href="https://toneoz.com">Graphical Pinyin Editor ToneOZ 拼音注音編輯器 澳聲通</a>
 	
 ![toneozdic_20210601-1](https://user-images.githubusercontent.com/14179988/120260354-14f19300-c2d9-11eb-8906-4e511b62aff6.jpg)
